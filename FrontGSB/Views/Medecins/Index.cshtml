@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Liste des médecins";
 }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <h2>Liste des médecins</h2>
 
@@ -53,11 +54,85 @@
             @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
         </td>
         <td>
-            @Html.ActionLink("Modifier", "Edit", new { id=item.IdMedecin }) |
-            @Html.ActionLink("Détails", "Details", new { id=item.IdMedecin }) |
-            @Html.ActionLink("Supprimer", "Delete", new { id=item.IdMedecin })
+            @*@Html.ActionLink("Modifier", "Edit", new { id=item.IdMedecin })*@
+            <a href="@Url.Action("Edit", new { id=item.IdMedecin })" class="btn btn-primary modifier">
+                <span>
+                    <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                </span>
+            </a>|
+            <a href="@Url.Action("Details", new { id=item.IdMedecin })" class="btn btn-primary detail">
+                <span>
+                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                </span>
+            </a>
+            @*@Html.ActionLink("Détails", "Details", new { id = item.IdMedecin })*@ |
+            <a href="@Url.Action("Details", new { id=item.IdMedecin })" class="btn btn-primary supprimer">
+                <span>
+                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                </span>
+            </a>
+            @*@Html.ActionLink("Supprimer", "Delete", new { id = item.IdMedecin })*@
         </td>
     </tr>
 }
 
 </table>
+
+<style>
+    .fa-pencil-square-o {
+        color: black;
+    }
+
+    .modifier {
+        background-color: transparent;
+        padding: 0;
+        height: max-content;
+        border: none;
+    }
+
+        .modifier:hover {
+            background-color: transparent;
+        }
+
+    .fa-pencil-square-o:hover {
+        transform: scale(1.3);
+    }
+
+    .fa-info-circle {
+        color: black;
+    }
+
+    .supprimer {
+        background-color: transparent;
+        padding: 0;
+        height: max-content;
+        border: none;
+    }
+
+        .supprimer:hover {
+            background-color: transparent;
+        }
+
+    .fa-info-circle:hover {
+        transform: scale(1.3);
+    }
+
+    .fa-trash {
+        color: black;
+    }
+
+    .detail {
+        background-color: transparent;
+        padding: 0;
+        height: max-content;
+        border: none;
+    }
+
+        .detail:hover {
+            background-color: transparent;
+        }
+
+    .fa-trash:hover {
+        transform: scale(1.3);
+    }
+</style>
