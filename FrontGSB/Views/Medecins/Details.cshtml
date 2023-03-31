@@ -1,0 +1,66 @@
+﻿@model ModelGSB.Medecin
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Medecin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Departement.NomDep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departement.NomDep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomMed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomMed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrenomMed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrenomMed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdresseMed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdresseMed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelephoneMed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelephoneMed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpecialiteComplementaire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpecialiteComplementaire)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdMedecin }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

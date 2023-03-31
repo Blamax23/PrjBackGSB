@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ModelGSB.Medecin>
+
+@{
+    ViewBag.Title = "Liste des médecins";
+}
+
+<h2>Liste des médecins</h2>
+
+<p>
+    @Html.ActionLink("Créer un nouveau", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Département")
+        </th>
+        <th>
+            @Html.DisplayName("Nom")
+        </th>
+        <th>
+            @Html.DisplayName("Prénom")
+        </th>
+        <th>
+            @Html.DisplayName("Adresse")
+        </th>
+        <th>
+            @Html.DisplayName("Téléphone")
+        </th>
+        <th>
+            @Html.DisplayName("Spécialité")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Departement.NomDep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomMed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrenomMed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdresseMed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelephoneMed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
+        </td>
+        <td>
+            @Html.ActionLink("Modifier", "Edit", new { id=item.IdMedecin }) |
+            @Html.ActionLink("Détails", "Details", new { id=item.IdMedecin }) |
+            @Html.ActionLink("Supprimer", "Delete", new { id=item.IdMedecin })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ModelGSB.Departement>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomDep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomRegion)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomDep)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomRegion)
+            </td>
+            @if (int.TryParse(item.IdDepartement, out int IdDepartement))
+            {
+                <td>
+                    @*@Html.ActionLink("Details", "Details", new { id = int.Parse(item.IdDepartement) })*@
+                    <a href="@Url.Action("Details", new { id = int.Parse(item.IdDepartement) })" class="btn btn-primary detail">
+                        <span>
+                            <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <p>Aucune donnée pour le moment.</p>
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>
+
+<style>
+    .fa-info-circle {
+        height: 50px;
+        color: black;
+    }
+
+    .detail {
+        background-color: transparent;
+        padding: 0;
+        height: max-content;
+    }
+</style>

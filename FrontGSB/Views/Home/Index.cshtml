@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Laboratoire GSB</h1>
+    <p class="lead">Le laboratoire GSB est issu de la fusion entre le géant américain Galaxy (spécialisé dans le secteur des maladies virales dont le SIDA et les hépatites) et le conglomérat européen Swiss Bourdin (travaillant sur des médicaments plus conventionnels), lui même déjà union de trois petits laboratoires .</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">En savoir plus &raquo;</a></p>
+</div>
+
+<div class="carousel-wrapper">
+    <span id="item-1"></span>
+    <span id="item-2"></span>
+    <span id="item-3"></span>
+    <div class="carousel-item item-1">
+        <a href="#item-3" class="arrow-prev arrow"></a>
+        <div class="col-md-4">
+            <h2>Créez votre premier médicament</h2>
+            <p>
+                GSB est toujours à la recherche d'innovation et de nouveaux savoirs. C'est pour cela que nous lançons la première campagne où tout
+                le monde peut essayer de créer son médicament. Candidatez en suivant le lien ci-dessous.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Candidater &raquo;</a></p>
+        </div>
+        <a href="#item-2" class="arrow-next arrow"></a>
+    </div>
+
+    <div class="carousel-item item-2">
+        <a href="#item-1" class="arrow-prev arrow"></a>
+        <div class="col-md-4">
+            <h2>Devenez Beta-Testeur</h2>
+            <p>Qui dit création de médicaments dit phase de test. Devenez nos prochains testeurs de médicaments et contribuez au progrès médical.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Découvrir &raquo;</a></p>
+        </div>
+        <a href="#item-3" class="arrow-next arrow"></a>
+    </div>
+
+    <div class="carousel-item item-3">
+        <a href="#item-2" class="arrow-prev arrow"></a>
+        <div class="col-md-4">
+            <h2>Ne soyez pas timide</h2>
+            <p>
+                Dans un processus de facilitation de l'accès à la médecine, venez assister aux conférences pharmaceutiques présentées par nos
+                créateurs de médicaments
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">S'inscrire &raquo;</a></p>
+        </div>
+        <a href="#item-1" class="arrow-next arrow"></a>
+    </div>
+</div>
+
+    <div class="row">
+        
+        
+        
+    </div>
+
+    <style>
+
+        .carousel-wrapper {
+            height: 400px;
+            position: relative;
+            width: 800px;
+            display: block;
+            margin: 50px auto;
+            border: 2px solid black;
+        }
+
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 25px 50px;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .arrow {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 12px;
+        }
+
+        .arrow-prev {
+            left: 30px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%) rotate(135deg);
+        }
+
+        .arrow-next {
+            right: 30px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        [id^= "item"] {
+            display: none;
+        }
+
+        .item-1 {
+            z-index: 2;
+            opacity: 1;
+            background: url('~/Images/médicaments.jpg');
+            background-size: cover;
+        }
+
+        .item-2 {
+            background: url('~/Images/testeur.jpg');
+            background-size: cover;
+        }
+
+        .item-3 {
+            background: url('~/Images/conférence.jpg');
+            background-size: cover;
+        }
+
+        *:target ~ .item-1 {
+            opacity: 0;
+        }
+
+        #item-1:target ~ .item-1 {
+            opacity: 1;
+        }
+
+        #item-2:target ~ .item-2, #item-3:target ~ .item-3 {
+            z-index: 3;
+            opacity: 1;
+        } 
+    </style>

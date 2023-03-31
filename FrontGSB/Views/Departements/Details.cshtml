@@ -1,0 +1,87 @@
+﻿@model ModelGSB.Departement
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Departement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomDep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomDep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomRegion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomRegion)
+        </dd>
+
+    </dl>
+</div>
+
+@if (Model.Medecins.Count != 0)
+{
+<h2>Liste des médecins de ce département : </h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Nom")
+            </th>
+            <th>
+                @Html.DisplayName("Prénom")
+            </th>
+            <th>
+                @Html.DisplayName("Adresse")
+            </th>
+            <th>
+                @Html.DisplayName("Numéro de Téléphone")
+            </th>
+            <th>
+                @Html.DisplayName("Spécialité")
+            </th>
+        </tr>
+
+        <tr>
+            @foreach (var item in Model.Medecins)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrenomMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdresseMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelephoneMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
+                </td>
+            }
+
+        </tr>
+    </table>
+}
+else
+{
+    <h2>Aucun médecin ne se trouve dans ce département</h2>
+}
+
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdDepartement }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
