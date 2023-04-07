@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Médecin</h4>
         <hr />
@@ -71,14 +71,32 @@
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Confirmer" class="btn btn-default" />
             </div>
+            <div class="col-md-offset-2 col-md-10">
+                @using (Html.BeginForm("Retour à la liste", "Index"))
+                {
+                    <button type="submit" class="btn btn-default">Retour</button>
+                }
+            </div>
         </div>
     </div>
 }
-
+@Html.ActionLink("Retour à la liste", "Index")
 <div>
-    @Html.ActionLink("Retour à la liste", "Index")
+
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+<style>
+    /*.form-group{
+        display: flex;
+        flex-wrap: nowrap;
+    }*/
+
+    .btn {
+        width: 15%;
+    }
+</style>

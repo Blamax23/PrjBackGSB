@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using ModelGSB;
 using ORMGSB;
 using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace FrontGSB.Controllers
 {
@@ -47,15 +49,23 @@ namespace FrontGSB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Medecin medecin = await db.Medecins.FindAsync(id);
-            if (medecin == null)
+            string url = "https://localhost:44333/api/Medecins/" + id;
+            using (HttpClient client = new HttpClient())
             {
-                return HttpNotFound();
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception();
+                }
+
+                var medecin = await response.Content.ReadAsAsync<Medecin>();
+                return View(medecin);
             }
-            return View(medecin);
         }
 
         // GET: Medecins/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep");
@@ -71,12 +81,28 @@ namespace FrontGSB.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Medecins.Add(medecin);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(medecin);
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("token", "azerty");
+                    using (var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44333/api/Medecins"))
+                    {
+                        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                        // envoie des infos
+                        var send = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+
+                        if (!send.IsSuccessStatusCode)
+                            throw new Exception();
+
+                        send.EnsureSuccessStatusCode();
+                        ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
+                        return RedirectToAction("Index");
+
+                    }
+                }
             }
 
-            ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
             return View(medecin);
         }
 
@@ -87,13 +113,20 @@ namespace FrontGSB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Medecin medecin = await db.Medecins.FindAsync(id);
-            if (medecin == null)
+            string url = "https://localhost:44333/api/Medecins/" + id;
+            using (HttpClient client = new HttpClient())
             {
-                return HttpNotFound();
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception();
+                }
+
+                var medecin = await response.Content.ReadAsAsync<Medecin>();
+                ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
+                return View(medecin);
             }
-            ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
-            return View(medecin);
         }
 
         // POST: Medecins/Edit/5
@@ -105,11 +138,22 @@ namespace FrontGSB.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(medecin).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                string json = JsonConvert.SerializeObject(medecin);
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("token", "azerty");
+                    HttpContent cont = new StringContent(json, Encoding.UTF8, "application/json");
+                    // envoie des infos
+                    var send = await client.PutAsync("https://localhost:44333/api/Medecins/" + medecin.IdMedecin, cont).ConfigureAwait(false);
+
+                    if (!send.IsSuccessStatusCode)
+                        throw new Exception();
+
+                    send.EnsureSuccessStatusCode();
+                    ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
+                    return RedirectToAction("Index");
+                }
             }
-            ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
             return View(medecin);
         }
 
@@ -120,12 +164,19 @@ namespace FrontGSB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Medecin medecin = await db.Medecins.FindAsync(id);
-            if (medecin == null)
+            string url = "https://localhost:44333/api/Medecins/" + id;
+            using (HttpClient client = new HttpClient())
             {
-                return HttpNotFound();
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception();
+                }
+
+                var medecin = await response.Content.ReadAsAsync<Medecin>();
+                return View(medecin);
             }
-            return View(medecin);
         }
 
         // POST: Medecins/Delete/5
@@ -133,10 +184,28 @@ namespace FrontGSB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Medecin medecin = await db.Medecins.FindAsync(id);
-            db.Medecins.Remove(medecin);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            string url = "https://localhost:44333/api/Medecins/" + id;
+
+            //controle indispensable
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("token", "azerty");
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception();
+                }
+
+                //récupere medecein en question
+                var medecin = await response.Content.ReadAsAsync<Medecin>();
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

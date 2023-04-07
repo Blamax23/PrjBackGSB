@@ -66,7 +66,7 @@
                 </span>
             </a>
             @*@Html.ActionLink("Détails", "Details", new { id = item.IdMedecin })*@ |
-            <a href="@Url.Action("Details", new { id=item.IdMedecin })" class="btn btn-primary supprimer">
+            <a href="@Url.Action("Delete", new { id=item.IdMedecin })" class="btn btn-primary supprimer">
                 <span>
                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                 </span>

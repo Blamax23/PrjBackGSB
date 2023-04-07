@@ -32,46 +32,45 @@
 @if (Model.Medecins.Count != 0)
 {
 <h2>Liste des médecins de ce département : </h2>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayName("Nom")
-            </th>
-            <th>
-                @Html.DisplayName("Prénom")
-            </th>
-            <th>
-                @Html.DisplayName("Adresse")
-            </th>
-            <th>
-                @Html.DisplayName("Numéro de Téléphone")
-            </th>
-            <th>
-                @Html.DisplayName("Spécialité")
-            </th>
-        </tr>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nom")
+        </th>
+        <th>
+            @Html.DisplayName("Prénom")
+        </th>
+        <th>
+            @Html.DisplayName("Adresse")
+        </th>
+        <th>
+            @Html.DisplayName("Numéro de Téléphone")
+        </th>
+        <th>
+            @Html.DisplayName("Spécialité")
+        </th>
+    </tr>
 
+    @foreach (var item in Model.Medecins)
+    {
         <tr>
-            @foreach (var item in Model.Medecins)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.NomMed)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrenomMed)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AdresseMed)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TelephoneMed)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
-                </td>
-            }
-
+            <td>
+                @Html.DisplayFor(modelItem => item.NomMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrenomMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdresseMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelephoneMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
+            </td>
         </tr>
+    }
     </table>
 }
 else
@@ -82,6 +81,5 @@ else
 
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdDepartement }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour", "Index")
 </p>
