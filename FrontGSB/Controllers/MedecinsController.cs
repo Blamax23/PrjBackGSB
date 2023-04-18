@@ -17,7 +17,6 @@ namespace FrontGSB.Controllers
 {
     public class MedecinsController : Controller
     {
-        private GsbOrm db = new GsbOrm();
 
         // GET: Medecins
         public async Task<ActionResult> Index()
@@ -66,10 +65,20 @@ namespace FrontGSB.Controllers
 
         // GET: Medecins/Create
         [Authorize]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep");
-            return View();
+            string url = "https://localhost:44333/api/Departements";
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception();
+                }
+                var departements = response.Content.ReadAsAsync<IEnumerable<Departement>>().Result.ToList();
+                ViewBag.IdDepartement = new SelectList(departements, "IdDepartement", "NomDep");
+                return View();
+            }
         }
 
         // POST: Medecins/Create
@@ -96,7 +105,8 @@ namespace FrontGSB.Controllers
                             throw new Exception();
 
                         send.EnsureSuccessStatusCode();
-                        ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
+                        //var departements = await send.Content.ReadAsAsync<IEnumerable<Departement>>();
+                        //ViewBag.IdDepartement = new SelectList(departements, "IdDepartement", "NomDep", medecin.IdDepartement);
                         return RedirectToAction("Index");
 
                     }
@@ -114,17 +124,22 @@ namespace FrontGSB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             string url = "https://localhost:44333/api/Medecins/" + id;
+            string url_dep = "https://localhost:44333/api/Departements/";
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Add("token", "azerty");
                 HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response_dep = await client.GetAsync(url_dep);
 
-                if (!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode || !response_dep.IsSuccessStatusCode)
                 {
                     throw new Exception();
                 }
 
+                var departements = response_dep.Content.ReadAsAsync<IEnumerable<Departement>>().Result.ToList();
+
                 var medecin = await response.Content.ReadAsAsync<Medecin>();
-                ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
+                ViewBag.IdDepartement = new SelectList(departements, "IdDepartement", "NomDep", medecin.IdDepartement);
                 return View(medecin);
             }
         }
@@ -150,7 +165,8 @@ namespace FrontGSB.Controllers
                         throw new Exception();
 
                     send.EnsureSuccessStatusCode();
-                    ViewBag.IdDepartement = new SelectList(db.Departements, "IdDepartement", "NomDep", medecin.IdDepartement);
+                    //var departements = await send.Content.ReadAsAsync<IEnumerable<Departement>>();
+                    //ViewBag.IdDepartement = new SelectList(departements, "IdDepartement", "NomDep", medecin.IdDepartement);
                     return RedirectToAction("Index");
                 }
             }
@@ -182,7 +198,7 @@ namespace FrontGSB.Controllers
         // POST: Medecins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int? id)
         {
             string url = "https://localhost:44333/api/Medecins/" + id;
 
@@ -195,15 +211,12 @@ namespace FrontGSB.Controllers
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("token", "azerty");
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = await client.DeleteAsync(url);
 
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new Exception();
                 }
-
-                //récupere medecein en question
-                var medecin = await response.Content.ReadAsAsync<Medecin>();
                 return RedirectToAction("Index");
             }
         }
@@ -212,7 +225,7 @@ namespace FrontGSB.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
             }
             base.Dispose(disposing);
         }

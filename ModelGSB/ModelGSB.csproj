@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TokenResponse.cs" />
+    <Compile Include="TokenRequest.cs" />
     <Compile Include="Departement.cs" />
     <Compile Include="Medecin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

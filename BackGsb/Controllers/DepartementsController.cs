@@ -19,7 +19,6 @@ namespace BackGsb.Controllers
         private GsbOrm db = new GsbOrm();
 
         // GET: api/Departements
-        [ProcedureAuthentification]
         public IQueryable<Departement> GetDepartements()
         {
             return db.Departements;
