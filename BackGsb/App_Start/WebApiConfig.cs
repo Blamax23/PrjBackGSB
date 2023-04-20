@@ -9,6 +9,7 @@ namespace BackGsb
     {
         public static void Register(HttpConfiguration config)
         {
+            config.MessageHandlers.Add(new TokenValidationHandler());
             // Configuration et services API Web
 
             // Itinéraires de l'API Web

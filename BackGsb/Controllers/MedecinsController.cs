@@ -19,10 +19,23 @@ namespace BackGsb.Controllers
         private GsbOrm db = new GsbOrm();
 
         // GET: api/Medecins
-        [ProcedureAuthentification]
         public IQueryable<Medecin> GetMedecins()
         {
             return db.Medecins;
+        }
+
+        // GET: api/Medecins?nom=nom
+        public IHttpActionResult GetMedecinsByNom(string nom)
+        {
+            var medecins = db.Medecins
+                .Where(m => m.NomMed.Contains(nom))
+                .ToList();
+            if (medecins == null)
+            {
+                return NotFound(); 
+            }
+
+            return Ok(medecins);
         }
 
         // GET: api/Medecins/5
@@ -40,6 +53,7 @@ namespace BackGsb.Controllers
         }
 
         // PUT: api/Medecins/5
+        [System.Web.Http.Authorize]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutMedecin(int id, Medecin medecin)
         {
@@ -75,6 +89,7 @@ namespace BackGsb.Controllers
         }
 
         // POST: api/Medecins
+        [System.Web.Http.Authorize]
         [ResponseType(typeof(Medecin))]
         public async Task<IHttpActionResult> PostMedecin(Medecin medecin)
         {
@@ -90,6 +105,7 @@ namespace BackGsb.Controllers
         }
 
         // DELETE: api/Medecins/5
+        [System.Web.Http.Authorize]
         [ResponseType(typeof(Medecin))]
         public async Task<IHttpActionResult> DeleteMedecin(int id)
         {

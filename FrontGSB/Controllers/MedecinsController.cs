@@ -12,6 +12,7 @@ using ORMGSB;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace FrontGSB.Controllers
 {
@@ -19,26 +20,50 @@ namespace FrontGSB.Controllers
     {
 
         // GET: Medecins
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
-            string url = "https://localhost:44333/api/Medecins";
-
-            using (HttpClient client = new HttpClient())
+            var medecins = new List<Medecin>();
+            if (!string.IsNullOrEmpty(searchString))
             {
-                client.DefaultRequestHeaders.Add("token", "azerty");
-                HttpResponseMessage response = await client.GetAsync(url);
+                string url = "https://localhost:44333/api/Medecins?nom=" + searchString;
 
-                if (!response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    throw new Exception();
+                    var response = client.GetAsync(url).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        medecins = response.Content.ReadAsAsync<List<Medecin>>().Result;
+                    }
                 }
-
-                var medecins = await response.Content.ReadAsAsync<IEnumerable<Medecin>>();
-
-                return View(medecins);
+                if(medecins == null)
+                {
+                    return View("Aucun m\x84decin n'a été trouvé");
+                }
+                else
+                {
+                    return View(medecins);
+                }
+                
             }
-            //var medecins = db.Medecins.Include(m => m.Departement);
-            //return View(await medecins.ToListAsync());
+            else
+            {
+                string url = "https://localhost:44333/api/Medecins";
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("token", "azerty");
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception();
+                    }
+
+                    var allmedecins = await response.Content.ReadAsAsync<IEnumerable<Medecin>>();
+
+                    return View(allmedecins);
+                }
+            }
         }
 
         // GET: Medecins/Details/5
@@ -64,12 +89,15 @@ namespace FrontGSB.Controllers
         }
 
         // GET: Medecins/Create
-        [Authorize]
+        [Authorize] //pour l'IHM
         public async Task<ActionResult> Create()
         {
             string url = "https://localhost:44333/api/Departements";
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ReadToken());
+
                 HttpResponseMessage response = await client.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -94,9 +122,10 @@ namespace FrontGSB.Controllers
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("token", "azerty");
                     using (var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44333/api/Medecins"))
                     {
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ReadToken());
                         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
                         // envoie des infos
                         var send = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
@@ -117,6 +146,7 @@ namespace FrontGSB.Controllers
         }
 
         // GET: Medecins/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -124,10 +154,12 @@ namespace FrontGSB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             string url = "https://localhost:44333/api/Medecins/" + id;
-            string url_dep = "https://localhost:44333/api/Departements/";
+            string url_dep = "https://localhost:44333/api/Departements";
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("token", "azerty");
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ReadToken());
+
                 HttpResponseMessage response = await client.GetAsync(url);
                 HttpResponseMessage response_dep = await client.GetAsync(url_dep);
 
@@ -156,7 +188,9 @@ namespace FrontGSB.Controllers
                 string json = JsonConvert.SerializeObject(medecin);
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("token", "azerty");
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ReadToken());
+
                     HttpContent cont = new StringContent(json, Encoding.UTF8, "application/json");
                     // envoie des infos
                     var send = await client.PutAsync("https://localhost:44333/api/Medecins/" + medecin.IdMedecin, cont).ConfigureAwait(false);
@@ -174,6 +208,7 @@ namespace FrontGSB.Controllers
         }
 
         // GET: Medecins/Delete/5
+        [Authorize] //pour l'IHM
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -183,6 +218,9 @@ namespace FrontGSB.Controllers
             string url = "https://localhost:44333/api/Medecins/" + id;
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ReadToken());
+
                 HttpResponseMessage response = await client.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)
@@ -210,7 +248,9 @@ namespace FrontGSB.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("token", "azerty");
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ReadToken());
+
                 HttpResponseMessage response = await client.DeleteAsync(url);
 
                 if (!response.IsSuccessStatusCode)
@@ -228,6 +268,21 @@ namespace FrontGSB.Controllers
                 //db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string ReadToken()
+        {
+            string token = string.Empty;
+            try
+            {
+                string filename = @"C:\tmp\token.txt";
+                token = System.IO.File.ReadAllText(filename);
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return token;
         }
     }
 }

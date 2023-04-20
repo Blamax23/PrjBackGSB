@@ -33,5 +33,9 @@ namespace ModelGSB
         public string IdDepartement { get; set; }
 
         public virtual Departement Departement { get; set; }
+
+        //recherche par nom
+        [NotMapped]
+        public string nom { get; set; }
     }
 }

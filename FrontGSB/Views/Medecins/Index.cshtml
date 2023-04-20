@@ -10,6 +10,14 @@
 <p>
     @Html.ActionLink("Créer un nouveau", "Create")
 </p>
+@using (Html.BeginForm("Index", "Medecins", FormMethod.Get))
+{
+    <p>
+        <input type="text" name="searchString" placeholder="Nom du médecin..."/>
+        <input type="submit" value="Rechercher" />
+        <a href="@Url.Action("Index")">Tout afficher</a>
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -33,48 +41,49 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Departement.NomDep)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NomMed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrenomMed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AdresseMed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TelephoneMed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
-        </td>
-        <td>
-            @*@Html.ActionLink("Modifier", "Edit", new { id=item.IdMedecin })*@
-            <a href="@Url.Action("Edit", new { id=item.IdMedecin })" class="btn btn-primary modifier">
-                <span>
-                    <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                </span>
-            </a>|
-            <a href="@Url.Action("Details", new { id=item.IdMedecin })" class="btn btn-primary detail">
-                <span>
-                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
-                </span>
-            </a>
-            @*@Html.ActionLink("Détails", "Details", new { id = item.IdMedecin })*@ |
-            <a href="@Url.Action("Delete", new { id=item.IdMedecin })" class="btn btn-primary supprimer">
-                <span>
-                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                </span>
-            </a>
-            @*@Html.ActionLink("Supprimer", "Delete", new { id = item.IdMedecin })*@
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departement.NomDep)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrenomMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdresseMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelephoneMed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
+            </td>
+            <td>
+                @*@Html.ActionLink("Modifier", "Edit", new { id=item.IdMedecin })*@
+                <a href="@Url.Action("Edit", new { id=item.IdMedecin })" class="btn btn-primary modifier">
+                    <span>
+                        <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                    </span>
+                </a>|
+                <a href="@Url.Action("Details", new { id=item.IdMedecin })" class="btn btn-primary detail">
+                    <span>
+                        <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                    </span>
+                </a>
+                @*@Html.ActionLink("Détails", "Details", new { id = item.IdMedecin })*@ |
+                <a href="@Url.Action("Delete", new { id=item.IdMedecin })" class="btn btn-primary supprimer">
+                    <span>
+                        <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                    </span>
+                </a>
+                @*@Html.ActionLink("Supprimer", "Delete", new { id = item.IdMedecin })*@
+            </td>
+        </tr>
+    }
 
 </table>
 
