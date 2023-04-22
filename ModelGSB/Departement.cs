@@ -1,5 +1,6 @@
 namespace ModelGSB
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,7 @@ namespace ModelGSB
         public string NomRegion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnoreSerialization]
         public virtual ICollection<Medecin> Medecins { get; set; }
     }
 }

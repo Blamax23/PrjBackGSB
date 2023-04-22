@@ -1,4 +1,7 @@
-﻿@model IEnumerable<ModelGSB.Departement>
+﻿@using Newtonsoft.Json;
+
+
+@model IEnumerable<ModelGSB.Departement>
 
 @{
     ViewBag.Title = "Index";
@@ -7,6 +10,8 @@
 
 
 <h2>Index</h2>
+
+
 
 <table class="table">
     <tr>
@@ -18,9 +23,12 @@
         </th>
         <th></th>
     </tr>
-
+    @{
+        List<ModelGSB.Departement> departements = new List<ModelGSB.Departement>();
+    }
     @foreach (var item in Model)
     {
+        departements.Add(item);
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.NomDep)
@@ -51,6 +59,9 @@
 
 </table>
 
+<a href="@Url.Action("DownloadJson")" class="btn btn-primary" download>Télécharger la liste au format JSON</a>
+
+
 <style>
     .fa-info-circle {
         color: black;
@@ -63,11 +74,48 @@
         border: none;
     }
 
-    .detail:hover{
-        background-color : transparent;
+        .detail:hover {
+            background-color: transparent;
+        }
+
+    .fa-info-circle:hover {
+        transform: scale(1.3);
     }
 
-    .fa-info-circle:hover{
-        transform: scale(1.3);
+    /* Style pour la table */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+        font-size: 1.5rem;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    /* Style pour les cellules de la table */
+    td, th {
+        border: 1px solid #dee2e6;
+        padding: 0.75rem;
+        vertical-align: middle;
+    }
+
+    /* Style pour l'en-tête de la table */
+    th {
+        font-weight: 700;
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    /* Style pour les liens des boutons d'action */
+    .btn {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* Style pour le bouton Détails */
+    .detail {
+        background-color: #ffc107;
+        margin-right: 5px;
     }
 </style>

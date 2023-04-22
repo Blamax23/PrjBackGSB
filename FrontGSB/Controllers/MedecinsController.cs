@@ -36,14 +36,7 @@ namespace FrontGSB.Controllers
                         medecins = response.Content.ReadAsAsync<List<Medecin>>().Result;
                     }
                 }
-                if(medecins == null)
-                {
-                    return View("Aucun m\x84decin n'a été trouvé");
-                }
-                else
-                {
-                    return View(medecins);
-                }
+                return View(medecins);
                 
             }
             else
@@ -283,6 +276,48 @@ namespace FrontGSB.Controllers
                 throw new Exception(e.Message);
             }
             return token;
+        }
+
+        public FileContentResult DownloadJson(string searchString)
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44333/api/Medecins?nom=" + searchString);
+
+            var response = client.GetAsync(client.BaseAddress).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                var medecins = JsonConvert.DeserializeObject<IEnumerable<Medecin>>(json);
+
+                var bytes = Encoding.ASCII.GetBytes(json);
+                return File(bytes, "application/json", "liste_medecins.json");
+            }
+            else
+            {
+                throw new Exception("Erreur lors de la récupération des données de la base de données.");
+            }
+        }
+
+        public FileContentResult DownloadJsonFull()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44333/api/Medecins/");
+
+            var response = client.GetAsync(client.BaseAddress).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                var medecins = JsonConvert.DeserializeObject<IEnumerable<Medecin>>(json);
+
+                var bytes = Encoding.ASCII.GetBytes(json);
+                return File(bytes, "application/json", "liste_medecins_complete.json");
+            }
+            else
+            {
+                throw new Exception("Erreur lors de la récupération des données de la base de données.");
+            }
         }
     }
 }

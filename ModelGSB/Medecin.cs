@@ -1,5 +1,6 @@
 namespace ModelGSB
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -32,9 +33,11 @@ namespace ModelGSB
         [StringLength(3)]
         public string IdDepartement { get; set; }
 
+        [JsonIgnoreSerialization]
         public virtual Departement Departement { get; set; }
 
         //recherche par nom
+        [JsonIgnore]
         [NotMapped]
         public string nom { get; set; }
     }

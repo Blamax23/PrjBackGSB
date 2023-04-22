@@ -84,7 +84,7 @@ namespace BackGsb.Controllers
 
 
 
-            const string sec = "LeSoleilEtLaMereQueDemandeLePeuple";
+            const string sec = "EnAvrilNeTeDecouvrePasDUnFilEnMaiFaisCeQuIlTePlait";
             var now = DateTime.UtcNow;
             var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(sec));
             var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);

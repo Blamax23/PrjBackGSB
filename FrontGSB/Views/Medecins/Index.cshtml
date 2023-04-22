@@ -13,79 +13,104 @@
 @using (Html.BeginForm("Index", "Medecins", FormMethod.Get))
 {
     <p>
-        <input type="text" name="searchString" placeholder="Nom du médecin..."/>
+        <input type="text" name="searchString" placeholder="Nom du médecin..." />
         <input type="submit" value="Rechercher" />
         <a href="@Url.Action("Index")">Tout afficher</a>
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Département")
-        </th>
-        <th>
-            @Html.DisplayName("Nom")
-        </th>
-        <th>
-            @Html.DisplayName("Prénom")
-        </th>
-        <th>
-            @Html.DisplayName("Adresse")
-        </th>
-        <th>
-            @Html.DisplayName("Téléphone")
-        </th>
-        <th>
-            @Html.DisplayName("Spécialité")
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+@if (Model.Count() == 0)
+{
+    <h2>Aucun médecin ne correspond à cette recherche.</h2>
+}
+else
+{
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departement.NomDep)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomMed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrenomMed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdresseMed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TelephoneMed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
-            </td>
-            <td>
-                @*@Html.ActionLink("Modifier", "Edit", new { id=item.IdMedecin })*@
-                <a href="@Url.Action("Edit", new { id=item.IdMedecin })" class="btn btn-primary modifier">
-                    <span>
-                        <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                    </span>
-                </a>|
-                <a href="@Url.Action("Details", new { id=item.IdMedecin })" class="btn btn-primary detail">
-                    <span>
-                        <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
-                    </span>
-                </a>
-                @*@Html.ActionLink("Détails", "Details", new { id = item.IdMedecin })*@ |
-                <a href="@Url.Action("Delete", new { id=item.IdMedecin })" class="btn btn-primary supprimer">
-                    <span>
-                        <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                    </span>
-                </a>
-                @*@Html.ActionLink("Supprimer", "Delete", new { id = item.IdMedecin })*@
-            </td>
+            <th>
+                @Html.DisplayName("Département")
+            </th>
+            <th>
+                @Html.DisplayName("Nom")
+            </th>
+            <th>
+                @Html.DisplayName("Prénom")
+            </th>
+            <th>
+                @Html.DisplayName("Adresse")
+            </th>
+            <th>
+                @Html.DisplayName("Téléphone")
+            </th>
+            <th>
+                @Html.DisplayName("Spécialité")
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departement.NomDep)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrenomMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdresseMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelephoneMed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecialiteComplementaire)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Modifier", "Edit", new { id=item.IdMedecin })*@
+                    <a href="@Url.Action("Edit", new { id=item.IdMedecin })" class="btn btn-primary modifier">
+                        <span>
+                            <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                        </span>
+                    </a>|
+                    <a href="@Url.Action("Details", new { id=item.IdMedecin })" class="btn btn-primary detail">
+                        <span>
+                            <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    @*@Html.ActionLink("Détails", "Details", new { id = item.IdMedecin })*@ |
+                    <a href="@Url.Action("Delete", new { id=item.IdMedecin })" class="btn btn-primary supprimer">
+                        <span>
+                            <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    @*@Html.ActionLink("Supprimer", "Delete", new { id = item.IdMedecin })*@
+                </td>
+            </tr>
+        }
+
+
+    </table>
+}
+
+@{
+    string nom = Request["searchString"];
+}
+
+@if (nom != null)
+{
+    <button onclick="location.href='@Url.Action("DownloadJson", new { searchString = nom})'">Télécharger la liste au format JSON</button>
+}
+else
+{
+    <button onclick="location.href='@Url.Action("DownloadJsonFull")'">Télécharger la liste au format JSON</button>
+}
+
+
 
 <style>
     .fa-pencil-square-o {
@@ -143,5 +168,51 @@
 
     .fa-trash:hover {
         transform: scale(1.3);
+    }
+
+    /* Style pour la table */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+        font-size: 1.5rem;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    /* Style pour les cellules de la table */
+    td, th {
+        border: 1px solid #dee2e6;
+        padding: 0.75rem;
+        vertical-align: middle;
+    }
+
+    /* Style pour l'en-tête de la table */
+    th {
+        font-weight: 700;
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    /* Style pour les liens des boutons d'action */
+    .btn {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* Style pour les boutons Modifier, Détails et Supprimer */
+    .modifier {
+        background-color: #28a745;
+        margin-right: 5px;
+    }
+
+    .detail {
+        background-color: #ffc107;
+        margin-right: 5px;
+    }
+
+    .supprimer {
+        background-color: #dc3545;
     }
 </style>

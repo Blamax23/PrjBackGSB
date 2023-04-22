@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using ModelGSB;
 using ORMGSB;
 using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace FrontGSB.Controllers
 {
@@ -61,6 +63,27 @@ namespace FrontGSB.Controllers
                 var departmt = await response.Content.ReadAsAsync<Departement>();
 
                 return View(departmt);
+            }
+        }
+
+        public FileContentResult DownloadJson()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44333/api/Departements/"); // l'URI de l'API
+
+            var response = client.GetAsync(client.BaseAddress).Result; // appel de la méthode HTTP GET pour récupérer les données des départements
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                var departements = JsonConvert.DeserializeObject<IEnumerable<Departement>>(json); // désérialisation des données JSON en objets Departement
+
+                var bytes = Encoding.ASCII.GetBytes(json);
+                return File(bytes, "application/json", "liste_departements.json");
+            }
+            else
+            {
+                throw new Exception("Erreur lors de la récupération des données de la base de données.");
             }
         }
 
