@@ -11,13 +11,13 @@
     @Html.ActionLink("Créer un nouveau", "Create")
 </p>
 @using (Html.BeginForm("Index", "Medecins", FormMethod.Get))
-{
-    <p>
-        <input type="text" name="searchString" placeholder="Nom du médecin..." />
-        <input type="submit" value="Rechercher" />
-        <a href="@Url.Action("Index")">Tout afficher</a>
-    </p>
-}
+    {
+        <p>
+            <input type="text" name="searchString" placeholder="Nom du médecin..." />
+            <input type="submit" value="Rechercher" />
+            <a href="@Url.Action("Index")">Tout afficher</a>
+        </p>
+    }
 
 @if (Model.Count() == 0)
 {

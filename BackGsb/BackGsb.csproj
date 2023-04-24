@@ -203,7 +203,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ORMGSB\ORMGSB.csproj">
+    <ProjectReference Include="..\..\..\Users\Maxim\Documents\Cours Epsi\Maintenance Applicative\PrjBackGSB\ORMGSB\ORMGSB.csproj">
       <Project>{56377609-3897-424d-953e-6cc215a76b80}</Project>
       <Name>ORMGSB</Name>
     </ProjectReference>
