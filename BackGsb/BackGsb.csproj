@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BackGsb</RootNamespace>
     <AssemblyName>BackGsb</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -203,13 +203,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Users\Maxim\Documents\Cours Epsi\Maintenance Applicative\PrjBackGSB\ORMGSB\ORMGSB.csproj">
-      <Project>{56377609-3897-424d-953e-6cc215a76b80}</Project>
-      <Name>ORMGSB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ModelGSB\ModelGSB.csproj">
       <Project>{29fe1dc0-34ab-46b0-8e83-f2d3a7a2eaff}</Project>
       <Name>ModelGSB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ORM_PPE_SLAM\ORMGSB.csproj">
+      <Project>{5af98ce3-5013-4929-9e22-9a611f062e2b}</Project>
+      <Name>ORMGSB</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

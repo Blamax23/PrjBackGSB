@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelGSB", "ModelGSB\ModelG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontGSB", "FrontGSB\FrontGSB.csproj", "{E940006C-9663-4121-982E-CE0731690807}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORMGSB", "..\..\Users\Maxim\Documents\Cours Epsi\Maintenance Applicative\PrjBackGSB\ORMGSB\ORMGSB.csproj", "{56377609-3897-424D-953E-6CC215A76B80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORMGSB", "ORM_PPE_SLAM\ORMGSB.csproj", "{5AF98CE3-5013-4929-9E22-9A611F062E2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{E940006C-9663-4121-982E-CE0731690807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E940006C-9663-4121-982E-CE0731690807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E940006C-9663-4121-982E-CE0731690807}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56377609-3897-424D-953E-6CC215A76B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56377609-3897-424D-953E-6CC215A76B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56377609-3897-424D-953E-6CC215A76B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56377609-3897-424D-953E-6CC215A76B80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AF98CE3-5013-4929-9E22-9A611F062E2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AF98CE3-5013-4929-9E22-9A611F062E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AF98CE3-5013-4929-9E22-9A611F062E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AF98CE3-5013-4929-9E22-9A611F062E2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
