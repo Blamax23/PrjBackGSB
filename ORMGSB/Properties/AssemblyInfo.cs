@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("ORMGSB")]
+[assembly: AssemblyTitle("ORM_PPE_SLAM")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP Inc.")]
-[assembly: AssemblyProduct("ORMGSB")]
-[assembly: AssemblyCopyright("Copyright © HP Inc. 2023")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ORM_PPE_SLAM")]
+[assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("aadf49d0-a8c7-46de-bc17-cfa0b76119b0")]
+[assembly: Guid("5af98ce3-5013-4929-9e22-9a611f062e2b")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //
